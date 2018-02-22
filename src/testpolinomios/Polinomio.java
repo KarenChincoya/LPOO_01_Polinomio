@@ -1,7 +1,6 @@
 package testpolinomios;
 import java.util.Scanner;
 
-
 public class Polinomio {
         //Linked List functions
     private Monomio head;
@@ -12,7 +11,7 @@ public class Polinomio {
      tamanio = 0;
     }
     
-    public boolean isEmpty(){
+    private boolean isEmpty(){
         return head==null;
     }
     
@@ -20,7 +19,7 @@ public class Polinomio {
         return tamanio;
     }
     
-    public void appendMonomio(Integer c, Integer e){ //funcion agregar al final
+    private void appendMonomio(Integer c, Integer e){ //funcion agregar al final
         Monomio nuevo = new Monomio(c,e);
         if(isEmpty()){
             head = nuevo;
@@ -35,7 +34,7 @@ public class Polinomio {
         tamanio++;
     }
     
-    public boolean buscarMonomio(Monomio monomio){
+    private boolean buscarMonomio(Monomio monomio){
         Monomio current = head;
         boolean encontrado = false;
         while(current!=null && encontrado!=true){
@@ -48,7 +47,7 @@ public class Polinomio {
         return encontrado;        
     }
     
-    public void removerPorPosicion(Integer posicion){
+    private void removerPorPosicion(Integer posicion){
         if(posicion>=0 && posicion<tamanio){
             if(posicion==0){
                 head = head.getNext();
@@ -64,7 +63,7 @@ public class Polinomio {
         }
     }    
 //leer polinomio
-    public void leerPolinomio(){
+    public void leerPolinomio(){ //PRINCIPAL
         Scanner sc = new Scanner(System.in);
         String s;
         Integer m;
@@ -80,6 +79,7 @@ public class Polinomio {
             e = sc.nextInt();
             appendMonomio(c,e);
         }
+        ordenarPorGrado();
     }
     
     public double evaluarPolinomio(Double n){
@@ -105,13 +105,29 @@ public class Polinomio {
                     nuevoCoeficiente = current.getCoeficiente()+ movil.getCoeficiente();
                     current.setCoeficiente(nuevoCoeficiente);
                     //ahora hay que eliminar el monomio o hacer su coeficiente igual a cero
-                    removerPorPosicion(posicionMovil);
+                    movil = movil.getNext(); //movil sera el siguiente del acutual
+                    removerPorPosicion(posicionMovil); //eliminamos el nodo que elegimos 
+                    //posicionMovil++; la posicion no cambia porque el siguiente del eliminado toma su lugar, pero hablamos de otros valores                                       
+                }else{
+                    movil = movil.getNext(); //saltar al siguiente monomio
+                    posicionMovil++;
                 }
-                movil = movil.getNext();
-                posicionMovil++;
             }
             current = current.getNext();
-            posicion++;
+            posicion++; //aqui si va aumentando uno por uno para lograrlo
+        }
+    }
+        
+    //funcion para ordenar 
+    private void ordenarPorGrado(){
+        Monomio current = head;
+        Monomio aux;
+        while(current.getNext() != null){
+            aux = current.getNext();
+            while(aux!=null){
+                
+            }    
+            current = current.getNext();
         }
     }
 }
